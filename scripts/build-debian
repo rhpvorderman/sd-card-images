@@ -76,26 +76,20 @@ PASSWORD="${PASSWORD_OVERRIDE:-$(pwgen -B -A 6 1)}"
 case "${OS}-${ARCH}-${DIST}" in
 debian-*-rc-buggy|debian-*-experimental)
 	tee debian/tmp/sources.list <<- EOF
-deb http://deb.debian.org/debian ${TARGET} main
-deb-src http://deb.debian.org/debian ${TARGET} main
-deb http://deb.debian.org/debian ${DIST} main
-deb-src http://deb.debian.org/debian ${DIST} main
+deb http://deb.debian.org/debian ${TARGET} main non-free-firmware
+deb http://deb.debian.org/debian ${DIST} main non-free-firmware
 EOF
 	;;
 debian-*-sid|debian-*-unstable)
 	tee debian/tmp/sources.list <<- EOF
-deb http://deb.debian.org/debian ${DIST} main
-deb-src http://deb.debian.org/debian ${DIST} main
+deb http://deb.debian.org/debian ${DIST} main non-free-firmware
 EOF
 	;;
 debian-*)
 	tee debian/tmp/sources.list <<- EOF
-deb http://deb.debian.org/debian ${DIST} main
-deb-src http://deb.debian.org/debian ${DIST} main
-deb http://deb.debian.org/debian ${DIST}-updates main
-deb-src http://deb.debian.org/debian ${DIST}-updates main
-deb http://security.debian.org/debian-security ${DIST}-security main
-deb-src http://security.debian.org/debian-security ${DIST}-security main
+deb http://deb.debian.org/debian ${DIST} main non-free-firmware
+deb http://deb.debian.org/debian ${DIST}-updates main non-free-firmware
+deb http://security.debian.org/debian-security ${DIST}-security main non-free-firmware
 EOF
 	;;
 ubuntu-*)
@@ -143,6 +137,36 @@ chroot debian /bin/sh -ex <<- EOF
 /usr/bin/apt-get -y --no-install-recommends ${KERNELSUITE} install "${KERNEL}"
 /usr/bin/apt-get -y install systemd-timesyncd || :
 /usr/bin/apt-get -y install systemd-resolved || :
+/usr/bin/apt-get -y install \
+adduser \
+apt \
+apt-utils \
+apt-transport-https \
+arm-trusted-firmware \
+curl \
+coreutils \
+cpufrequtils \
+debconf \
+debconf-i18n \
+device-tree-compiler \
+dialog \
+dmidecode \
+dns-root-data \
+findutils \
+firmware-misc-nonfree \
+firmware-realtek \
+htop \
+less \
+locales \
+logrotate \
+ncdu \
+rsync \
+sudo \
+tar \
+tmux \
+tree \
+wget \
+|| :
 /usr/bin/apt-get clean
 /bin/rm -rf /var/lib/apt/lists/*
 /bin/echo "kernel-url,${KERNEL_URL}" >> /tmp/versions.csv
