@@ -30,6 +30,8 @@ The image will end up in /tmp/sd-images on the host.
 
 ### Build your own Debian ext4 root filesystem image
 
+Make sure the `qemu-user-static` package has been installed on the host.
+
 To build a Debian ext4 root filesystem image for arm64:
 
     docker build -t sd-images https://github.com/johang/sd-card-images.git
