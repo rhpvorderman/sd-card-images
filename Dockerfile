@@ -52,4 +52,5 @@ RUN apt-get update && \
     rm -f /var/log/*.log
 ENV PATH="/debimg/scripts:${PATH}"
 COPY . /debimg
+ENV WORKDIR="/debimg"
 WORKDIR /debimg
