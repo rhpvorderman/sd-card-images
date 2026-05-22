@@ -126,8 +126,7 @@ cp -v /usr/bin/qemu-*-static debian/usr/bin || :
 # Build a Debian root filesystem (second stage)
 chroot debian /bin/sh -ex <<- EOF
 /debootstrap/debootstrap --second-stage
-/bin/mv /tmp/sources.list /etc/apt/sources.list
-/bin/mv /tmp/priority-experimental /etc/apt/preferences.d/priority-experimental || :
+/bin/mv /tmp/sources.list /etc/apt/sources.list || :
 
 # Mount procfs (apt needs it)
 /usr/bin/mount -t proc proc /proc
