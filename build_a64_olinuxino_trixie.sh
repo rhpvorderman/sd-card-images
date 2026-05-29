@@ -10,7 +10,7 @@ sd-images \
 build-boot \
 a64_olinuxino \
 allwinner-a64 \
-a64-alinuxino_defconfig \
+a64-olinuxino_defconfig \
 aarch64-linux-gnu
 
 docker run --rm -v /tmp/sd-images:/artifacts sd-images build-debian debian arm64 trixie
